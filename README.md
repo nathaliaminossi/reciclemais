@@ -2,23 +2,9 @@
 
 <div align="center">
 
-### 🌱 Tecnologia, sustentabilidade e inovação para incentivar a reciclagem
+###  Tecnologia, sustentabilidade e inovação para incentivar a reciclagem
 
 </div>
-
----
-## 📌 Navegação
-
-- 🌱 Sobre o Projeto | [Acessar](#sobre-o-projeto) |
-- 🎯 Objetivos | [Acessar](#objetivos) |
-- 📅 Cronograma | [Acessar](#cronograma) |
-- 🗄️ Banco de Dados | [Acessar](#banco-de-dados) |
-- 📊 Apresentação | [Acessar](#apresentação) |
-- 🎨 Protótipo | [Acessar](#protótipo) |
-- 💻 Tecnologias | [Acessar](#tecnologias) |
-- 🤝 Como contribuir | [Acessar](#como-contribuir) |
-- 👨‍💻 Autores | [Acessar](#autores) |
-- 📄 Licença | [Acessar](#licença) |
 
 
 ---
