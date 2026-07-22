@@ -156,7 +156,7 @@ export default function Bonifications() {
                       strokeWidth="9"
                       strokeLinecap="round"
                       strokeDasharray={`${(safeProgress / 100) * 326.7} 326.7`}
-                      className="transition-all duration-700"
+                      className="transition-all duration-700 "
                     />
                   </svg>
                   <div className="absolute flex flex-col items-center">
@@ -190,7 +190,7 @@ export default function Bonifications() {
 
                   <Progress
                     value={safeProgress}
-                    className="h-2 rounded-full bg-muted [&>div]:bg-primary"
+                    className="h-2 rounded-full bg-muted [&>div]:bg-green-800"
                   />
 
                   {nextBonus ? (

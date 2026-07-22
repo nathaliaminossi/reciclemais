@@ -14,20 +14,13 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-/**
- * ---------------------------------------------------------------------------
- * Types
- * ---------------------------------------------------------------------------
- * This shape is what a real API call to the AI verification endpoint should
- * eventually resolve to. Everything below is UI-only: swap `mockAnalyze`
- * for a real fetch/axios call and the rest of the component keeps working.
- */
+
 type AnalysisStatus = "idle" | "loading" | "success" | "rejected";
 
 interface AnalysisSuccess {
   status: "success";
   material: string;
-  confidence: number; // 0-100
+  confidence: number;
   pointsEarned: number;
 }
 
@@ -38,13 +31,7 @@ interface AnalysisRejected {
 
 type AnalysisResult = AnalysisSuccess | AnalysisRejected;
 
-/**
- * ---------------------------------------------------------------------------
- * Mocked "AI" call — replace with a real request later.
- * Keeping the same async signature (File -> Promise<AnalysisResult>) means
- * the rest of the UI never has to change when the real endpoint is wired up.
- * ---------------------------------------------------------------------------
- */
+
 async function mockAnalyze(_file: File): Promise<AnalysisResult> {
   await new Promise((resolve) => setTimeout(resolve, 2200));
 
@@ -66,11 +53,7 @@ async function mockAnalyze(_file: File): Promise<AnalysisResult> {
   };
 }
 
-/**
- * ---------------------------------------------------------------------------
- * UploadZone — drag & drop + click-to-upload + preview
- * ---------------------------------------------------------------------------
- */
+
 function UploadZone({
   previewUrl,
   onFileSelected,
@@ -300,12 +283,7 @@ function AnalysisCard({
   return null;
 }
 
-/**
- * ---------------------------------------------------------------------------
- * Main section — plugs into the Materials page between the carousel and
- * the materials table.
- * ---------------------------------------------------------------------------
- */
+
 export default function EvidenceVerificationSection() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -363,7 +341,7 @@ export default function EvidenceVerificationSection() {
     <section className="rounded-3xl border border-border bg-background p-6 shadow-sm md:p-8">
       <div className="flex items-center gap-2">
         <Sparkles className="h-4 w-4 text-primary" />
-        <span className="text-xs font-semibold uppercase tracking-wide text-primary">
+        <span className="text-xs font-semibold uppercase tracking-wide text-lime-900">
           Verificação por IA
         </span>
       </div>
@@ -371,7 +349,7 @@ export default function EvidenceVerificationSection() {
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left column — upload */}
         <div className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
-          <h2 className="text-xl font-bold text-foreground">
+          <h2 className="text-xl font-bold text-shadow-amber-950">
             Registrar evidência
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">

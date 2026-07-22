@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useAuth } from "@/context/authContext"
 import { useNavigate } from "react-router"
 import MaterialCarousel from "@/components/ Materialcarousel "
-import { Recycle, Search, Star, AlertCircle, PackageSearch, Loader2, Leaf, GlassWater, Package, Cpu } from "lucide-react"
+import { Recycle, Search, Star, AlertCircle, PackageSearch, Loader2, Leaf, GlassWater, Package, Cpu, FileText, Hammer, Wine } from "lucide-react"
 import EvidenceVerificationSection from "@/components/ Evidenceverification"
 
 import {
@@ -91,31 +91,59 @@ export default function Materials() {
     const top = material.reduce((a, b) => (b.points > a.points ? b : a))
     return { total: material.length, avg: avg.toFixed(1), top }
   }, [material])
-
   const carouselItems = [
-    { icon: Recycle, name: "Plástico", desc: "PET, PP, PEAD" },
-    { icon: Leaf, name: "Orgânico", desc: "Restos e resíduos" },
-    { icon: GlassWater, name: "Vidro", desc: "Garrafas e potes" },
-    { icon: Package, name: "Papel", desc: "Papelão e jornal" },
-    { icon: Cpu, name: "Eletrônico", desc: "Pilhas e placas" },
+    {
+      name: "Plástico",
+      desc: "Garrafas, embalagens...",
+      icon: Package,
+      color: "text-blue-500",
+      bg: "bg-blue-100",
+    },
+    {
+      name: "Vidro",
+      desc: "Garrafas e potes",
+      icon: Wine,
+      color: "text-emerald-600",
+      bg: "bg-emerald-100",
+    },
+    {
+      name: "Metal",
+      desc: "Latas e alumínio",
+      icon: Hammer,
+      color: "text-amber-500",
+      bg: "bg-amber-100",
+    },
+    {
+      name: "Papel",
+      desc: "Jornais e caixas",
+      icon: FileText,
+      color: "text-orange-500",
+      bg: "bg-orange-100",
+    },
+    {
+      name: "Eletrônicos",
+      desc: "Pilhas e aparelhos",
+      icon: Cpu,
+      color: "text-purple-600",
+      bg: "bg-purple-100",
+    },
   ];
-
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-50/40 via-background to-background">
-      <div className="mx-auto max-w-7xl px-2 py-8 space-y-12">
+      <div className="mx-auto max-w-7xl px-2 py-8 space-y-5">
         {/* Header */}
         <section className="py-12 md:py-16">          <div className="mx-auto max-w-3xl text-center animate-fade-in">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border/70 bg-surface px-3 py-1.5 text-xs text-muted-foreground shadow-[var(--shadow-soft)]">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60"></span>
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary"></span>
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-500"></span>
             </span>
             Análise por IA disponível
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-bold tracking-tight">
             Guia de
-            <span className="text-primary"> Materiais Recicláveis</span>
+            <span className="text-lime-800"> Materiais Recicláveis</span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl text-muted-foreground leading-relaxed">
@@ -125,7 +153,7 @@ export default function Materials() {
           <div className="mt-8 flex items-center justify-center gap-3">
 
             <a
-              href="#materials"
+              href="#materiais"
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-5 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
             >
               Ver materiais
@@ -149,8 +177,10 @@ export default function Materials() {
                   className="basis-1/2 sm:basis-1/3 lg:basis-1/5"
                 >
                   <div className="flex h-full flex-col gap-3 rounded-2xl border bg-card p-5 shadow-sm transition-colors hover:border-success/40">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-muted text-success">
-                      <item.icon className="h-5 w-5" />
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-xl ${item.bg}`}
+                    >
+                      <item.icon className={`h-5 w-5 ${item.color}`} />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground">
@@ -168,6 +198,7 @@ export default function Materials() {
             <CarouselNext />
           </Carousel>
         </section>
+
 
         <div>
           <EvidenceVerificationSection />
@@ -228,7 +259,7 @@ export default function Materials() {
             </div>
 
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" id="materiais">
               <Table>
                 <TableHeader>
                   <TableRow>

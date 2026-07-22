@@ -31,10 +31,10 @@ export default function QuickStats({
         return (
           <div
             key={stat.label}
-            className="flex items-center gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm"
+            className="flex items-center gap-4 border border-border bg-card p-5 shadow-sm"
           >
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10">
-              <Icon className="h-5 w-5 text-primary" />
+              <Icon className="h-5 w-5 text-blue-500" />
             </div>
             <div>
               <p className="text-xs text-muted-foreground">{stat.label}</p>
@@ -46,10 +46,10 @@ export default function QuickStats({
         )
       })}
 
-      <div className="flex flex-col justify-center gap-2.5 rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <div className="flex flex-col justify-center gap-2.5  border border-border bg-card p-5 shadow-sm">
         <div className="flex items-center gap-4">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10">
-            <Target className="h-5 w-5 text-primary" />
+            <Target className="h-5 w-5 text-amber-300" />
           </div>
           <div>
             <p className="text-xs text-muted-foreground">Meta da semana</p>
