@@ -7,13 +7,16 @@ import ReciclyngModal, { type RecyclingFormData } from "@/components/reciclyngMo
 import RecyclingCard from "@/components/recyclingCard"
 import ImpactRing from "@/components/Impactring"
 import { RecycleBin } from "@/components/RecycleBin"
+import EarnPointsFlow from "@/components/Earnpointsflow"
+import QuickStats from "@/components/Quickstats"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getUser, createDelivery } from "@/api/userHome"
-import { ArchiveRestore, PlusCircle, Sprout } from "lucide-react"
+import { ArchiveRestore, Award, PlusCircle, Sprout } from "lucide-react"
 import { useAuth } from "../../context/authContext"
 import { useSnackbar } from "notistack"
 import "../../global.css"
 import HeroImageEffect from "@/components/HeroImageEffect"
+import MaterialCarousel from "@/components/ Materialcarousel "
 
 interface User {
   id: number
@@ -23,6 +26,8 @@ interface User {
   Points: number
   fotoPerfil: string
   bio?: string
+  // TODO: substituir por dado real assim que o backend expuser conquistas
+  achievements?: { id: number }[]
 }
 
 const WEEKLY_GOAL = 200
@@ -44,6 +49,11 @@ export default function UserHome() {
 
   const deliveries = user?.delivery || []
   const points = user?.Points || 0
+
+  // TODO: quando o backend retornar o progresso semanal real, trocar `points`
+  // por esse valor. Por enquanto reaproveitamos a mesma base usada no ImpactRing.
+  const weeklyProgress = Math.min(points, WEEKLY_GOAL)
+  const achievementsCount = user?.achievements?.length ?? 0
 
   const countsByMaterial = useMemo(() => {
     return deliveries.reduce((acc: Record<string, number>, item: any) => {
@@ -75,54 +85,79 @@ export default function UserHome() {
       <ReciclyngModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleAddRecycling} />
 
       {/* HERO */}
-    
-      <section className="py-8">
-  <div className="relative flex flex-col lg:flex-row items-center justify-between gap-16">
-        
-          {/* efeito de fundo */}
-          <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-green-300/15 blur-3xl" />
-          <div className="absolute -bottom-20 left-0 h-60 w-60 rounded-full bg-lime-300/10 blur-3xl" />
+     {/* HERO */}
+<section className="relative overflow-hidden py-6">
+  <div className="absolute right-0 top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+  <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-chart-3/20 blur-3xl" />
+  <div className="absolute -bottom-20 left-0 h-60 w-60 rounded-full bg-chart-3/10 blur-3xl" />
 
-          <div className="relative flex flex-col lg:flex-row justify-between items-center gap-10">
+  <div className="relative flex flex-col lg:flex-row justify-between items-center gap-10">
+    {/* Texto */}
+    <div className="max-w-xl space-y-4">
+      <span className="inline-flex items-center gap-2 rounded-full bg-card/70 px-4 py-2 text-xs font-semibold text-primary shadow-sm backdrop-blur">
+        <Sprout size={15} />
+        Sua jornada sustentável
+      </span>
 
+      <h1 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+        Bem-vindo de volta,
+        <br />
+        <span className="text-primary">
+          {user?.name?.split(" ")[0] || "Usuário"}
+        </span>
+      </h1>
 
-            {/* Texto */}
-            <div className="max-w-xl space-y-5">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-xs font-semibold text-green-700 shadow-sm backdrop-blur">
-                <Sprout size={15} />
-                Sua jornada sustentável
-              </span>
+      <p className="max-w-md text-[15px] leading-relaxed text-muted-foreground">
+        {user?.bio ||
+          "Cada entrega registrada representa menos resíduos na natureza e mais impacto positivo para o planeta."}
+      </p>
 
+      <div className="flex flex-wrap items-center gap-3 pt-1">
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          className="rounded-full px-6 py-6 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90"
+        >
+          <PlusCircle className="mr-2 h-5 w-5" />
+          Adicionar reciclagem
+        </Button>
 
-              <h1 className="font-display text-4xl md:text-5xl font-bold leading-tight text-slate-900">
-                Bem-vindo de volta,
-                <br />
-                <span className="text-green-700">
-                  {user?.name?.split(" ")[0] || "Usuário"}
-                </span>
-              </h1>
+        <Button
+          variant="outline"
+          className="rounded-full px-6 py-6 border-border text-foreground hover:bg-muted"
+          onClick={() => document.getElementById("impacto")?.scrollIntoView({ behavior: "smooth" })}
+        >
+          Ver meu impacto
+        </Button>
+      </div>
 
-              <p className="max-w-md text-slate-600 leading-relaxed">
-                {user?.bio ||
-                  "Cada entrega registrada representa menos resíduos na natureza e mais impacto positivo para o planeta."}
-              </p>
+      {/* Indicador rápido — preenche o espaço com dado real, não decoração */}
+      <div className="flex items-center gap-2 pt-2 text-sm text-muted-foreground">
+        <Award className="h-4 w-4 text-primary" />
+        Você já soma{" "}
+        <span className="font-semibold text-foreground">
+          {points.toLocaleString("pt-BR")} pontos
+        </span>
+      </div>
+    </div>
 
-              <Button
-                onClick={() => setIsModalOpen(true)}
-                className="rounded-full px-6 py-6 bg-green-600 hover:bg-green-700 shadow-lg"
-              >
-                <PlusCircle className="mr-2 h-5 w-5" />
-                Adicionar reciclagem
-              </Button>
-            </div>
-
-            {/* Ilustração */}
-            <div className="hidden lg:flex items-center justify-center flex-1 ">
-    <HeroImageEffect />
+    {/* Ilustração */}
+    <div className="hidden lg:flex items-center justify-center flex-1">
+      <HeroImageEffect />
+    </div>
   </div>
-          </div>
-        </div>
-      </section>
+</section>
+
+      {/* COMO GANHAR PONTOS */}
+      <EarnPointsFlow />
+
+      {/* ESTATÍSTICAS RÁPIDAS */}
+      <QuickStats
+        points={points}
+        recyclingCount={deliveries.length}
+        achievementsCount={achievementsCount}
+        weeklyGoal={WEEKLY_GOAL}
+        weeklyProgress={weeklyProgress}
+      />
 
       <Separator className="bg-border" />
 
@@ -175,12 +210,12 @@ export default function UserHome() {
 
         {/* IMPACTO */}
         <div className="flex-1">
-          <Card className="lg:sticky lg:top-6 rounded-2xl border border-neutral-200 dark:border-white/5 bg-white dark:bg-surface/60 shadow-sm dark:shadow-none">
+          <Card className="lg:sticky lg:top-6 rounded-2xl border border-border bg-card shadow-sm">
             <CardHeader>
-              <CardTitle className="text-base font-medium text-neutral-900 dark:text-white">Seu impacto</CardTitle>
+              <CardTitle id="impacto" className="text-base font-medium text-foreground">Seu impacto</CardTitle>
             </CardHeader>
             <CardContent>
-              <ImpactRing points={points} goal={WEEKLY_GOAL} />
+              <ImpactRing  points={points} goal={WEEKLY_GOAL} />
             </CardContent>
           </Card>
         </div>

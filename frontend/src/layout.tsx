@@ -7,7 +7,7 @@ import { Link } from "react-router"
 import { ModeToggle } from "./components/mode-toggle"
 import { Button } from "./components/ui/button"
 import { UserMenu } from "./components/userMenu";
-import LogoR from './imgs/logo.png'
+import LogoR from './imgs/logo2.png'
 
 
 
@@ -15,22 +15,41 @@ export default function Layout() {
   return (
     <SidebarProvider>
       <main className="h-full w-full">
-       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-zinc-200">
-  <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-8">
-
+        
+<header className="sticky top-0 z-50 w-full">
+<div
+  className="
+    mx-auto
+    mt-4
+    flex
+    h-16
+    max-w-7xl
+    items-center
+    justify-between
+    rounded-2xl
+    border
+    border-border/60
+    bg-background/80
+    px-6
+    backdrop-blur-xl
+    shadow-lg
+  "
+>
     {/* Logo */}
+    
     <div className="flex items-center gap-3">
 <img
    src={LogoR}
-   className="h-14 w-auto object-contain"
+   className="h-11 w-auto object-contain"
 />
       <div>
-        <h1 className="font-display text-xl font-bold text-green-700">
-          Recicle+
-        </h1>
-        <p className="text-xs text-zinc-500">
-          Sustentabilidade inteligente
-        </p>
+       <h1 className="font-display text-lg font-bold">
+    Recicle+
+</h1>
+
+<p className="text-[11px] text-muted-foreground">
+    Plataforma sustentável
+</p>
       </div>
     </div>
 
@@ -57,10 +76,11 @@ export default function Layout() {
 
     {/* Direita */}
     <div className="flex items-center gap-3">
+<ModeToggle/>
 
-      <ModeToggle />
+<div className="h-6 w-px bg-border"/>
 
-      <UserMenu />
+<UserMenu/>
 
       <div className="md:hidden">
         <SidebarTrigger />

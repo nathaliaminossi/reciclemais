@@ -46,7 +46,7 @@ export function UserMenu() {
             <AvatarFallback>BM</AvatarFallback>
           </Avatar>
 
-          <span className="hidden sm:block text-sm font-medium text-neutral-50">
+          <span className="hidden sm:block text-sm font-medium text-gray-700">
             {user?.name}
           </span>
         </button>

@@ -1,6 +1,15 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import { Edit } from "lucide-react"
+import {
+  Edit,
+  CircleUserRound,
+  UserRound,
+  Fingerprint,
+  Mail,
+  Lock,
+  Image as ImageIcon,
+  ShieldAlert,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -34,7 +43,6 @@ export interface User {
 }
 
 export default function UserProfile() {
-  // const [user, setUser] = useState<User | null>(null)
   const [openEditModal, setOpenEditModal] = useState(false)
 
   const navigate = useNavigate()
@@ -88,9 +96,6 @@ export default function UserProfile() {
     updateMutation.mutate(update)
   }
 
-
-
-
   let perfilFoto = ""
   if (user?.fotoPerfil?.startsWith("https:")) {
     perfilFoto = user.fotoPerfil
@@ -101,72 +106,185 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="flex justify-center p-4 md:p-22">
-      <Card className="w-full max-w-3xl  rounded-2xl shadow-lg">
-        <CardContent className="p-4 md:p-8 space-y-4 md:space-y-6">
-          {/* Header */}
-          <div className="lex flex-col items-center gap-2 md:gap-3">
-            <Avatar className="w-20 h-20 md:w-28 md:h-28">
-              <AvatarImage src={perfilFoto} />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
-            <h2 className="text-lg md:text-xl font-semibold">Perfil do Usuário</h2>
+    <main className="min-h-screen bg-gradient-to-b from-secondary/40 via-background to-background">
+      <div className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
+        {/* Header */}
+        <header className="mb-8 flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/25">
+            <CircleUserRound className="h-5 w-5" />
           </div>
-
-          <Separator />
-
-          {/* Informações pessoais */}
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <h3 className="font-semibold text-lg">Informações pessoais</h3>
-              <Button size="sm" onClick={() => setOpenEditModal(true)} className="self-start sm:self-auto">
-                <Edit className="w-4 h-4 mr-2" /> Editar
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <DataField title="Nome" info={user?.name ?? ""} />
-              <DataField title="CPF" info={user?.cpf ?? ""} />
-              <DataField title="Email" info={user?.email ?? ""} />
-              <DataPasswordField title="Senha" info="••••••••" />
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* Bio */}
-          <div className="space-y-2">
-            <h3 className="font-semibold text-lg">Bio</h3>
-            <p className="text-sm md:text-base text-muted-foreground">
-              {user?.bio ? user?.bio : "Hi, I'm a passionate developer focused on crafting great digital experiences."}
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-primary/70">
+              Conta
             </p>
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Perfil e configurações
+            </h1>
           </div>
+        </header>
 
-          <Separator />
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Card de foto / identidade */}
+          <Card className="h-fit rounded-3xl border-border/60 shadow-sm transition hover:shadow-md lg:col-span-1">
+            <CardContent className="flex flex-col items-center gap-4 p-6 text-center sm:p-8">
+              <Avatar className="h-28 w-28 border-4 border-background shadow-lg ring-4 ring-primary/10 sm:h-32 sm:w-32">
+                <AvatarImage src={perfilFoto} />
+                <AvatarFallback className="text-2xl font-semibold">U</AvatarFallback>
+              </Avatar>
 
-          {/* Delete */}
-          <div className="flex justify-center sm:justify-end">
-            <AlertDialog>
-              <AlertDialogTrigger className="bg-red-700 p-2 rounded-sm  dark:hover:bg-red-500 transition ">Deletar</AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Você tem certeza que deseja deletar sua conta?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Essa ação sera permante, confirme sua senha para prosseguir.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  {/* <Input placeholder="Digite sua senha" onChange={(e) => setPasswordVeri(e.target.value)}></Input> */}
-                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                  <AlertDialogAction className="bg-red-600  dark:hover:bg-red-500 transition" onClick={hadleDelete}>Deletar</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+              <div className="space-y-1">
+                <h2 className="text-lg font-semibold text-foreground">
+                  {user?.name || "Perfil do usuário"}
+                </h2>
+                <p className="break-all text-sm text-muted-foreground">{user?.email}</p>
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setOpenEditModal(true)}
+                className="w-full gap-1.5 rounded-full"
+              >
+                <ImageIcon className="h-3.5 w-3.5" /> Alterar foto
+              </Button>
+
+              <Separator />
+
+              <Button
+                onClick={() => setOpenEditModal(true)}
+                className="w-full gap-1.5 rounded-xl shadow-md shadow-primary/25"
+              >
+                <Edit className="h-4 w-4" /> Editar perfil
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Coluna principal */}
+          <div className="space-y-6 lg:col-span-2">
+            {/* Informações pessoais */}
+            <Card className="rounded-3xl border-border/60 shadow-sm transition hover:shadow-md">
+              <CardContent className="space-y-5 p-6 sm:p-8">
+                <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                  <div>
+                    <h3 className="text-base font-semibold text-foreground">
+                      Informações pessoais
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Seus dados de cadastro e acesso à conta
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => setOpenEditModal(true)}
+                    className="gap-1.5 self-start rounded-full sm:self-auto"
+                  >
+                    <Edit className="h-3.5 w-3.5" /> Editar
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="flex items-start gap-3 rounded-2xl border border-border/60 bg-secondary/30 p-4 transition hover:border-primary/30 hover:bg-secondary/50">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <UserRound className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <DataField title="Nome" info={user?.name ?? ""} />
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 rounded-2xl border border-border/60 bg-secondary/30 p-4 transition hover:border-primary/30 hover:bg-secondary/50">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Fingerprint className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <DataField title="CPF" info={user?.cpf ?? ""} />
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 rounded-2xl border border-border/60 bg-secondary/30 p-4 transition hover:border-primary/30 hover:bg-secondary/50">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Mail className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <DataField title="Email" info={user?.email ?? ""} />
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 rounded-2xl border border-border/60 bg-secondary/30 p-4 transition hover:border-primary/30 hover:bg-secondary/50">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Lock className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <DataPasswordField title="Senha" info="••••••••" />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Bio */}
+            <Card className="rounded-3xl border-border/60 shadow-sm transition hover:shadow-md">
+              <CardContent className="space-y-3 p-6 sm:p-8">
+                <div>
+                  <h3 className="text-base font-semibold text-foreground">Bio</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Uma breve descrição sobre você, visível no seu perfil
+                  </p>
+                </div>
+                <p className="rounded-2xl border border-border/60 bg-secondary/30 p-4 text-sm italic leading-relaxed text-muted-foreground">
+                  {user?.bio
+                    ? user?.bio
+                    : "Hi, I'm a passionate developer focused on crafting great digital experiences."}
+                </p>
+              </CardContent>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Zona de perigo */}
+        <Card className="mt-6 rounded-3xl border-destructive/30 bg-destructive/5 shadow-sm transition hover:shadow-md">
+          <CardContent className="p-6 sm:p-8">
+            <div className="mb-4 flex items-center gap-2">
+              <ShieldAlert className="h-4 w-4 text-destructive" />
+              <h3 className="text-base font-semibold text-destructive">Zona de perigo</h3>
+            </div>
+            <div className="flex flex-col gap-4 rounded-2xl border border-destructive/20 bg-background/60 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+              <div>
+                <p className="text-sm font-medium text-foreground">Deletar esta conta</p>
+                <p className="mt-1 max-w-md text-sm text-muted-foreground">
+                  Ao deletar sua conta, todos os seus dados serão removidos permanentemente.
+                  Essa ação não pode ser desfeita.
+                </p>
+              </div>
+              <AlertDialog>
+                <AlertDialogTrigger className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl bg-destructive px-5 text-sm font-medium text-destructive-foreground shadow-sm transition hover:bg-destructive/90">
+                  Deletar conta
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Você tem certeza que deseja deletar sua conta?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Essa ação será permanente, confirme sua senha para prosseguir.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-destructive text-destructive-foreground transition hover:bg-destructive/90"
+                      onClick={hadleDelete}
+                    >
+                      Deletar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {openEditModal && user && (
         <EditProfileModal
@@ -175,6 +293,6 @@ export default function UserProfile() {
           onClose={() => setOpenEditModal(false)}
         />
       )}
-    </div>
+    </main>
   )
 }

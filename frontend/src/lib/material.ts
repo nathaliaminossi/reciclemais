@@ -24,7 +24,7 @@ export const materialConfig: Record<string, MaterialConfig> = {
     text: "text-[#4C8DFF]",
     icon: Newspaper,
   },
-  "plástico": {
+  plastico: {
     label: "Plástico",
     hex: "#F2545B",
     bg: "bg-[#F2545B]/10",
@@ -47,15 +47,27 @@ export const materialConfig: Record<string, MaterialConfig> = {
   },
 }
 
+// Fallback agora usa os tokens do tema (nada de branco fixo), então o
+// ícone continua visível mesmo em cima do bg-card claro.
 const fallback: MaterialConfig = {
   label: "Outro",
-  hex: "#8B9C8E",
-  bg: "bg-white/10",
-  text: "text-white/70",
+  hex: "var(--muted-foreground)",
+  bg: "bg-muted",
+  text: "text-muted-foreground",
   icon: Package,
 }
 
+// Remove acentos antes de comparar, pra "Plástico", "plastico" e "PLÁSTICO"
+// caírem todos na mesma chave em vez de irem parar no fallback.
+function normalize(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+}
+
 export function getMaterialConfig(material: string): MaterialConfig {
-  const key = material?.toLowerCase().trim()
+  const key = normalize(material ?? "")
   return materialConfig[key] ?? fallback
 }

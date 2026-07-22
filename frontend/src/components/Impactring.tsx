@@ -30,7 +30,7 @@ export default function ImpactRing({ points, goal }: ImpactRingProps) {
         <svg viewBox="0 0 180 180" className="h-full w-full -rotate-90">
           <circle
             cx="90" cy="90" r={radius} fill="none"
-            stroke="currentColor" className="text-white/5" strokeWidth="14"
+            stroke="currentColor" className="text-foreground/10" strokeWidth="14"
           />
           <circle
             cx="90" cy="90" r={radius} fill="none"
@@ -40,24 +40,24 @@ export default function ImpactRing({ points, goal }: ImpactRingProps) {
           />
           <defs>
             <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8BC53F" />
-              <stop offset="100%" stopColor="#F2B705" />
+              <stop offset="0%" stopColor="var(--chart-3)" />
+              <stop offset="100%" stopColor="var(--primary)" />
             </linearGradient>
           </defs>
         </svg>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <Leaf className="h-5 w-5 text-brand mb-1" />
-          <span className="font-display text-4xl font-semibold text-white tabular-nums">
+          <Leaf className="h-5 w-5 text-primary mb-1" />
+          <span className="font-display text-4xl font-semibold text-foreground tabular-nums">
             {animatedPoints}
           </span>
-          <span className="text-xs text-white/50">de {goal} pontos</span>
+          <span className="text-xs text-muted-foreground">de {goal} pontos</span>
         </div>
       </div>
 
-      <p className="text-sm text-white/70 text-center max-w-[220px]">
+      <p className="text-sm text-muted-foreground text-center max-w-[220px]">
         {progress >= 1
-          ? "Meta semanal concluída — parabéns! 🌱"
+          ? "Meta semanal concluída — parabéns!"
           : `Faltam ${goal - points} pontos para bater a meta desta semana`}
       </p>
     </div>

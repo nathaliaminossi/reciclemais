@@ -21,8 +21,8 @@ export default function RecyclingCard({ material, Peso, localizacao, index = 0 }
 
   return (
     <div
-      className="group flex items-center gap-4 rounded-xl border border-white/5 bg-surface-raised/40 p-3.5
-                 transition-all duration-200 hover:border-white/10 hover:bg-surface-raised/70
+      className="group flex items-center gap-4 rounded-xl border border-border bg-muted/40 p-3.5
+                 transition-all duration-200 hover:border-primary/20 hover:bg-muted/70
                  animate-fade-up"
       style={{ animationDelay: `${index * 60}ms` }}
     >
@@ -31,8 +31,8 @@ export default function RecyclingCard({ material, Peso, localizacao, index = 0 }
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="font-medium text-white truncate">{label}</h3>
-        <div className="mt-0.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/50">
+        <h3 className="font-medium text-foreground truncate">{label}</h3>
+        <div className="mt-0.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <Scale size={13} />
             {Peso} kg

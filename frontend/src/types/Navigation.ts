@@ -7,7 +7,7 @@ export const navigationItems = [
     icon: Home,
   },
   {
-    title: "Materiais",
+title: "Materiais",
     url: "/materials",
     icon: Inbox,
   },

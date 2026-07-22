@@ -14,9 +14,7 @@ export default function UserMap({ mapRef }: UserMapProps) {
   useEffect(() => {
     if (mapRef.current) return // impede recriar o mapa
 
-    const map = L.map("map", {
-      zoomControl: true,
-    }).setView([0, 0], 2)
+   const map = L.map("map", { zoomControl: true }).setView([0, 0], 8)
 
     mapRef.current = map
 
@@ -122,18 +120,9 @@ export default function UserMap({ mapRef }: UserMapProps) {
   }, [])
 
   return (
-    <div
-      id="map"
-      className="
-        w-full 
-        h-[60vh] 
-        rounded-2xl 
-        border 
-        border-border
-        overflow-hidden
-        shadow-sm
-        bg-muted
-      "
-    />
+   <div
+  id="map"
+  className="w-full h-full rounded-2xl overflow-hidden"
+/>
   )
 }

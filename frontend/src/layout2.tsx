@@ -14,7 +14,7 @@ export default function Layout() {
   return (
     <SidebarProvider>
       <main className="h-full w-full">
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#91B338]">
+        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#91B338] ">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
 
             <div className="flex items-center gap-3">
@@ -36,7 +36,7 @@ export default function Layout() {
             <nav className="hidden md:flex items-center gap-2">
               {navigationItems2.map(({ title, url, icon: Icon }) => (
                 <Link key={title} to={url}>
-                  <button className="flex items-center gap-2 px-3 py-2 text-xs text-white/70 hover:text-white">
+                  <button className="flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:text-white">
                     <Icon size={15} />
                     {title}
                   </button>
